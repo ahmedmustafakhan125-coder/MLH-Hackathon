@@ -58,7 +58,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_form(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="index.html")
 
 @app.post("/run", response_class=HTMLResponse)
 async def run_task(request: Request, prompt: str = Form(...)):
@@ -88,8 +88,9 @@ async def run_task(request: Request, prompt: str = Form(...)):
                     result_text = f.read()
 
     return templates.TemplateResponse(
-        "index.html", 
-        {"request": request, "result": result_text, "logs": logs}
+        request=request,
+        name="index.html", 
+        context={"result": result_text, "logs": logs}
     )
 
 if __name__ == "__main__":

@@ -68,3 +68,11 @@ python -m squeeze run "Write a Python function to validate an email address, inc
 - **Context Manager**: Dynamically resizes contexts. If the heavy model is unloaded due to memory constraints, the context manager actively truncates history to fit within the tiny model's strict 1024-token budget.
 - **Tuner & Profiler**: Measures your physical/logical cores and tests candidate configurations in real-time to pick the absolute fastest token-generation parameters.
 - **Pipeline**: Manages the loading, unloading, and graceful teardown of `llama-server` sub-processes.
+
+---
+
+## Future Roadmap
+- **Multi-Model Swarm Integration**: Expand the architecture to dynamically route tasks across *N* models (e.g., dedicated vision models, coding specialists, and audio-transcription layers) rather than just two.
+- **Rich Terminal UI**: A robust visual overhaul using the Python `rich` library to present syntax-highlighted code output, vibrant styling, and interactive multi-model planning grids.
+- **Web UI & API Endpoints**: Serve the optimized, dynamic model pipeline over a seamless local web dashboard for broader usage beyond the terminal.
+- **Plugin System**: Build a hook-based plugin architecture allowing users to easily slot in external tools (like search, RAG, and execution sandboxes) directly into Squeeze's private ecosystem.

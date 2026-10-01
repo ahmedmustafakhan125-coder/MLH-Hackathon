@@ -4,3 +4,7 @@ rich
 nvidia-ml-py
 huggingface_hub
 pytest
+fastapi
+uvicorn
+jinja2
+python-multipart

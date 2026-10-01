@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Squeeze Dashboard</title>
+<meta name="description" content="Local dashboard for Squeeze: private, CPU-only, two-model AI runs on this machine.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Ctext x='16' y='22' font-family='Consolas,monospace' font-size='15' font-weight='700' fill='%23fff' text-anchor='middle'%3ESQ%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/app.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#run">Skip to the pipeline</a>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="brand" href="#top" aria-label="Squeeze, back to top">
+      <span class="brand__mark" aria-hidden="true">SQ</span><span class="brand__name">SQUEEZE.</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#profile">Profile</a>
+      <a href="#run">Pipeline</a>
+      <a href="#run" data-tab="t-result">Result</a>
+      <a href="#privacy">Privacy</a>
+    </nav>
+    <a class="btn btn--line" href="#run" data-focus-goal>Run a Task</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="dots dots--tr" aria-hidden="true"></div>
+    <div class="dots dots--bl" aria-hidden="true"></div>
+    <div class="wrap hero__in">
+      <div class="hero__copy">
+        <p class="tag">&gt; INIT::SQUEEZE_LOCAL_AI</p>
+        <h1 class="display">
+          <span class="display__solid">SQUEEZE</span>
+          <span class="display__outline">LOCAL AI</span>
+        </h1>
+        <p class="lede">Runs the best open-weight models a plain laptop can handle. No GPU. It measures this
+          machine, routes every step to the right model, rebuilds context when it switches, and keeps your
+          data on this device.</p>
+        <div class="hero__cta">
+          <a class="btn btn--solid" href="#run" data-focus-goal>Run Pipeline</a>
+          <a class="link-arrow" href="#privacy">View Privacy Ledger &rarr;</a>
+        </div>
+      </div>
+
+      <aside class="term" aria-label="System status">
+        <div class="term__head"><span id="sys-status">SYS_STATUS: CONNECTING</span><span class="dot" id="sys-dot"></span></div>
+        <div class="term__body" id="sys-lines" aria-live="polite"><span class="k">&gt;</span> CONNECTING TO LOCAL ENGINE...<span class="caret"></span></div>
+        <div class="term__foot"><span>127.0.0.1 ONLY</span><span id="sys-version">V. 0.1.0</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 01 PROFILE -->
+  <section id="profile" class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="ghost" aria-hidden="true">01</span>
+        <h2 class="sec-title">SYSTEM <span class="outline">PROFILE</span></h2>
+        <p class="sec-sub">Measured on this machine by <code>squeeze setup</code>. Free RAM is read live, never assumed.</p>
+      </div>
+
+      <div class="callout" id="setup-callout" hidden>
+        <span class="callout__tag">SETUP REQUIRED</span>
+        <span>No tuned profile yet. Run <code>python -m squeeze setup</code> in the repo, then refresh.</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat__k">Operating system</div><div class="stat__v" id="st-os">-</div><div class="stat__s" id="st-os-s">&nbsp;</div></div>
+        <div class="stat"><div class="stat__k">CPU</div><div class="stat__v" id="st-cpu">-</div><div class="stat__s">physical / logical</div></div>
+        <div class="stat"><div class="stat__k">RAM free</div><div class="stat__v" id="st-ram">-</div><div class="meter" aria-hidden="true"><i id="st-ram-bar"></i></div><div class="stat__s" id="st-ram-s">&nbsp;</div></div>
+        <div class="stat"><div class="stat__k">GPU</div><div class="stat__v" id="st-gpu">-</div><div class="stat__s" id="st-gpu-s">&nbsp;</div></div>
+        <div class="stat"><div class="stat__k">Backend</div><div class="stat__v" id="st-backend">-</div><div class="stat__s" id="st-co">&nbsp;</div></div>
+      </div>
+
+      <div class="models">
+        <article class="model model--heavy" id="m-heavy">
+          <div class="model__top"><span class="badge badge--heavy">HEAVY MODEL</span><span class="model__role">plan / code / test</span></div>
+          <h3 class="model__name" data-f="name">-</h3>
+          <p class="model__place" data-f="placement">&nbsp;</p>
+          <dl class="kv">
+            <div><dt>THREADS</dt><dd data-f="threads">-</dd></div>
+            <div><dt>TOK/S</dt><dd data-f="tok_s">-</dd></div>
+            <div><dt>RAM</dt><dd data-f="ram_gb">-</dd></div>
+            <div><dt>CONTEXT</dt><dd data-f="ctx">-</dd></div>
+          </dl>
+          <div class="bars" data-f="tuning" aria-label="Tuning results"></div>
+        </article>
+        <article class="model model--tiny" id="m-tiny">
+          <div class="model__top"><span class="badge badge--tiny">TINY MODEL</span><span class="model__role">docs / summarize</span></div>
+          <h3 class="model__name" data-f="name">-</h3>
+          <p class="model__place" data-f="placement">&nbsp;</p>
+          <dl class="kv">
+            <div><dt>THREADS</dt><dd data-f="threads">-</dd></div>
+            <div><dt>TOK/S</dt><dd data-f="tok_s">-</dd></div>
+            <div><dt>RAM</dt><dd data-f="ram_gb">-</dd></div>
+            <div><dt>CONTEXT</dt><dd data-f="ctx">-</dd></div>
+          </dl>
+          <div class="bars" data-f="tuning" aria-label="Tuning results"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 RUN -->
+  <section id="run" class="section section--dark">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="ghost" aria-hidden="true">02</span>
+        <h2 class="sec-title">RUN <span class="outline">PIPELINE</span></h2>
+        <p class="sec-sub">The heavy model plans, each step is routed, and context is rebuilt on every flip. Nothing leaves this machine.</p>
+      </div>
+
+      <div class="run">
+        <form class="panel" id="run-form" novalidate>
+          <label class="label" for="goal">TASK GOAL</label>
+          <textarea id="goal" name="goal" rows="5" maxlength="2000" required spellcheck="false"
+            placeholder="Describe what you want built..."></textarea>
+          <div class="panel__row">
+            <button type="button" class="chip" id="demo-task">Use demo task</button>
+            <span class="count" id="goal-count">0 / 2000</span>
+          </div>
+
+          <fieldset class="opts">
+            <legend class="label">OPTIONS</legend>
+            <label class="check"><input type="checkbox" id="opt-pressure"><span>Simulate memory pressure at step 2</span></label>
+            <label class="field"><span>Real trigger: free RAM below (GB)</span>
+              <input type="number" id="opt-minfree" min="0.1" max="1024" step="0.1" inputmode="decimal" placeholder="off"></label>
+          </fieldset>
+
+          <div class="lock"><span class="lock__dot" aria-hidden="true"></span>PRIVATE MODE &middot; ALWAYS ON</div>
+          <button class="btn btn--invert btn--block" id="run-btn" type="submit">&#9654; Run Squeeze Pipeline</button>
+          <p class="form-msg" id="form-msg" role="alert" hidden></p>
+        </form>
+
+        <div class="output">
+          <div class="tabs" role="tablist" aria-label="Run output">
+            <button role="tab" id="t-flow" aria-controls="p-flow" aria-selected="true">Pipeline Flow</button>
+            <button role="tab" id="t-term" aria-controls="p-term" aria-selected="false" tabindex="-1">Terminal</button>
+            <button role="tab" id="t-result" aria-controls="p-result" aria-selected="false" tabindex="-1">result.md<span class="tab-dot" id="result-dot" hidden></span></button>
+          </div>
+          <div class="live" id="live" hidden><span class="spin" id="spin" aria-hidden="true">|</span><span id="live-msg"></span><span class="live__time" id="live-time"></span></div>
+          <div role="tabpanel" id="p-flow" aria-labelledby="t-flow" class="flow" aria-live="polite">
+            <div class="empty"><span class="empty__k">&gt;_</span>No run yet. Enter a goal and press Run.</div>
+          </div>
+          <div role="tabpanel" id="p-term" aria-labelledby="t-term" hidden><pre class="term-out" id="term-out">Waiting for a run...</pre></div>
+          <div role="tabpanel" id="p-result" aria-labelledby="t-result" hidden>
+            <div class="result-bar"><span id="result-path">No result yet</span><button type="button" class="chip" id="copy-result" disabled>Copy</button></div>
+            <pre class="result" id="result-out">Run a task to see result.md here.</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 PRIVACY -->
+  <section id="privacy" class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="ghost" aria-hidden="true">03</span>
+        <h2 class="sec-title">PRIVACY <span class="outline">LEDGER</span></h2>
+        <p class="sec-sub">What the guard proves, and what it does not claim.</p>
+      </div>
+      <div class="ledger">
+        <div class="ledger__cell"><span class="ledger__num">0</span><span class="ledger__lbl">connections allowed off-device</span></div>
+        <div class="ledger__cell"><span class="ledger__num" id="led-blocked">0</span><span class="ledger__lbl">blocked attempts (Squeeze process)</span></div>
+        <div class="ledger__cell"><span class="ledger__num ledger__num--sm" id="led-guard">STANDBY</span><span class="ledger__lbl">guard state</span></div>
+      </div>
+      <div class="honest">
+        <table>
+          <thead><tr><th scope="col">GUARANTEED</th><th scope="col">NOT COVERED</th></tr></thead>
+          <tbody>
+            <tr><td>The Squeeze process can only reach localhost in private mode: <code>connect</code> and DNS lookups to anything else are blocked.</td><td>Malware or other apps on this machine.</td></tr>
+            <tr><td><code>llama-server</code> binds to 127.0.0.1 and is never given download flags.</td><td>Model downloads during setup (Hugging Face sees which models you fetched, not your data).</td></tr>
+            <tr><td>Hugging Face offline and telemetry flags are set.</td><td>Third-party tools you plug in later.</td></tr>
+            <tr><td>Every blocked attempt is counted in the ledger above.</td><td>Your browser itself. This page loads nothing external (no CDN, no web fonts), but the browser is outside the guard.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <span><b>SQUEEZE.</b> <span id="foot-version">v0.1.0</span> &middot; MIT</span>
+    <span>Qwen3 (Apache-2.0) &middot; llama.cpp (MIT) &middot; served on 127.0.0.1 only</span>
+  </div>
+</footer>
+
+<a class="fab" href="#run" id="fab" aria-label="Pipeline status: idle"><span id="fab-icon" aria-hidden="true">&#9654;</span></a>
+</body>
+</html>

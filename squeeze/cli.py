@@ -24,12 +24,18 @@ def main(argv=None):
     r.add_argument("--cpu-only", action="store_true")
     r.add_argument("--simulate-pressure-at", type=int)
     r.add_argument("--min-free-gb", type=float)
+    d = sub.add_parser("dashboard", help="Open the local web dashboard (127.0.0.1 only)")
+    d.add_argument("--port", type=int, default=8765, help="Port on 127.0.0.1 (default 8765)")
+    d.add_argument("--no-browser", action="store_true", help="Don't open a browser tab")
     a = p.parse_args(argv)
-    if a.cpu_only:
+    if getattr(a, "cpu_only", False):
         os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
     if a.cmd == "setup":
         from .bootstrap import run_setup
         run_setup(a.heavy, a.tiny, a.cpu_only, a.no_tune)
+    elif a.cmd == "dashboard":
+        from .dashboard import serve
+        serve(port=a.port, open_browser=not a.no_browser)
     else:
         from .pipeline import run_task
         run_task(a.task, a.cpu_only, a.online, a.simulate_pressure_at, a.min_free_gb)

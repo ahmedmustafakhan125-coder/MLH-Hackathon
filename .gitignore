@@ -1,0 +1,9 @@
+models/
+bin/
+profiles/
+out/
+logs/
+.venv/
+__pycache__/
+*.gguf
+*.zip

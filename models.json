@@ -1,0 +1,5 @@
+{
+  "qwen3-0.6b": {"name": "Qwen3-0.6B", "glob": "Qwen3-0.6B*Q4_K_M*.gguf", "layers": 28, "ctx": 4096, "kv_gb_per_4k": 0.44, "license": "Apache-2.0"},
+  "qwen3-1.7b": {"name": "Qwen3-1.7B", "glob": "Qwen3-1.7B*Q4_K_M*.gguf", "layers": 28, "ctx": 4096, "kv_gb_per_4k": 0.44, "license": "Apache-2.0"},
+  "qwen3-4b":   {"name": "Qwen3-4B",   "glob": "Qwen3-4B*Q4_K_M*.gguf",   "layers": 36, "ctx": 4096, "kv_gb_per_4k": 0.56, "license": "Apache-2.0"}
+}

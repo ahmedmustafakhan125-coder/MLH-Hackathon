@@ -1,0 +1,6 @@
+httpx
+psutil
+rich
+nvidia-ml-py
+huggingface_hub
+pytest

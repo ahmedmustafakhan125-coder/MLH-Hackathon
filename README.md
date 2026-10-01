@@ -76,3 +76,12 @@ python -m squeeze run "Write a Python function to validate an email address, inc
 - **Rich Terminal UI**: A robust visual overhaul using the Python `rich` library to present syntax-highlighted code output, vibrant styling, and interactive multi-model planning grids.
 - **Web UI & API Endpoints**: Serve the optimized, dynamic model pipeline over a seamless local web dashboard for broader usage beyond the terminal.
 - **Plugin System**: Build a hook-based plugin architecture allowing users to easily slot in external tools (like search, RAG, and execution sandboxes) directly into Squeeze's private ecosystem.
+
+---
+
+## License
+Squeeze is released under the **MIT License**. See the `LICENSE` file for full details.
+
+### Third-Party Licenses
+- **Models**: The Qwen3 weights used in the default configurations are licensed under the **Apache License 2.0**.
+- **Inference Engine**: Squeeze relies heavily on `llama.cpp` for core LLM inference, which is provided under the **MIT License**.
